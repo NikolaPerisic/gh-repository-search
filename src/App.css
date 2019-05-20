@@ -1,14 +1,17 @@
+*,
+::after,
+::before {
+  box-sizing: border-box;
+}
+
 .App {
   text-align: center;
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   justify-content: center;
   color: #fff;
 }
 .wrapper {
   margin-top: 50px;
-  width: 50%;
 }
 .label {
   padding: 20px;
@@ -17,8 +20,29 @@
 }
 input {
   width: 400px;
-  min-height: 20px;
+  min-height: 30px;
+  font-size: 1.1rem;
 }
 .results {
   text-align: start;
+  padding: 20px;
+}
+.list-item {
+  display: flex;
+  padding: 0.1rem;
+  margin: 0.2rem;
+  flex-direction: column;
+  border: 1px solid yellow;
+  background-color: #fff;
+  color: black;
+}
+.list-item a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: firebrick;
+}
+p {
+  padding: 0.1rem;
+  margin: 0.2rem;
+  overflow: hidden;
 }

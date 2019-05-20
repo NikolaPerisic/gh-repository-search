@@ -1,6 +1,8 @@
 import React from "react";
 import "./App.css";
 import axios from "axios";
+import List from "./List";
+
 require("dotenv").config();
 class App extends React.Component {
   state = {
@@ -17,7 +19,9 @@ class App extends React.Component {
       node {
         ... on Repository {
           name
-          descriptionHTML
+          url
+          resourcePath
+          description
           stargazers {
             totalCount
           }
@@ -48,11 +52,11 @@ class App extends React.Component {
           }
         }
       );
-      console.log(response.data);
+      console.log(response.data.data.search.edges);
 
       this.setState(() => ({
         isLoaded: true,
-        items: response.data
+        items: response.data.data.search.edges
       }));
     } catch (error) {
       this.setState(() => ({ error }));
@@ -67,7 +71,19 @@ class App extends React.Component {
             <input type="text" name="search" placeholder="search..." />
           </label>
           <div className="results">
-            <p>Search results</p>
+            {this.state.items.map((item, key) => {
+              return (
+                <List
+                  key={key}
+                  description={item.node.description}
+                  url={item.node.url}
+                  name={item.node.resourcePath}
+                  stars={item.node.stargazers.totalCount}
+                  forks={item.node.forks.totalCount}
+                  updatedAt={item.node.updatedAt}
+                />
+              );
+            })}
           </div>
         </div>
       </div>
