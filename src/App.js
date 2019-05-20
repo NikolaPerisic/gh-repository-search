@@ -3,17 +3,11 @@ import "./App.css";
 import axios from "axios";
 import List from "./List";
 
-require("dotenv").config();
 class App extends React.Component {
   state = {
-    error: null,
-    isLoaded: false,
-    items: []
-  };
-  componentDidMount() {
-    const query = `
+    query: `
 {
-  search(query: "javascript", type: REPOSITORY, first: 10) {
+  search(query: ${this.queryString}, type: REPOSITORY, first: 10) {
     repositoryCount
     edges {
       node {
@@ -34,9 +28,15 @@ class App extends React.Component {
     }
   }
 }
-`;
-    const variables = {};
-    this.getRepos(query, variables);
+`,
+
+    error: null,
+    isLoaded: false,
+    queryString: "javascript",
+    items: []
+  };
+  componentDidMount() {
+    this.getRepos(this.state.query, this.state.variables);
   }
   getRepos = async (query, variables) => {
     try {
@@ -52,7 +52,6 @@ class App extends React.Component {
           }
         }
       );
-      console.log(response.data.data.search.edges);
 
       this.setState(() => ({
         isLoaded: true,
@@ -62,16 +61,40 @@ class App extends React.Component {
       this.setState(() => ({ error }));
     }
   };
+  handleInputChange = e => {
+    this.setState({ queryString: e.target.value });
+  };
+  handleSearch = () => {
+    console.log(this.state.queryString);
+    this.getRepos(this.state.query, this.state.variables);
+  };
   render() {
+    const inputValue = this.state.queryString;
+    const { error, isLoaded, items } = this.state;
+    let errorMessage = null,
+      loading = null;
+    if (error) errorMessage = <div>{error.message}</div>;
+    if (!isLoaded) loading = <div>Loading...</div>;
+
     return (
       <div className="App">
         <div className="wrapper">
           <div className="label">Github repository search</div>
           <label htmlFor="search">
-            <input type="text" name="search" placeholder="search..." />
+            <input
+              type="text"
+              name="search"
+              value={inputValue}
+              placeholder="search..."
+              onChange={this.handleInputChange}
+            />
           </label>
+          <button type="submit" onClick={this.handleSearch}>
+            Search
+          </button>
           <div className="results">
-            {this.state.items.map((item, key) => {
+            {error ? errorMessage : loading}
+            {items.map((item, key) => {
               return (
                 <List
                   key={key}
