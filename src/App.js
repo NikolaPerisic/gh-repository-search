@@ -2,34 +2,12 @@ import React from "react";
 import "./App.css";
 import axios from "axios";
 import List from "./List";
+import { query } from "./query";
 
 class App extends React.Component {
   state = {
-    query: `
-{
-  search(query: ${this.queryString}, type: REPOSITORY, first: 10) {
-    repositoryCount
-    edges {
-      node {
-        ... on Repository {
-          name
-          url
-          resourcePath
-          description
-          stargazers {
-            totalCount
-          }
-          forks {
-            totalCount
-          }
-          updatedAt
-        }
-      }
-    }
-  }
-}
-`,
-
+    query: query,
+    variables: {},
     error: null,
     isLoaded: false,
     queryString: "javascript",
@@ -52,7 +30,6 @@ class App extends React.Component {
           }
         }
       );
-
       this.setState(() => ({
         isLoaded: true,
         items: response.data.data.search.edges
@@ -63,11 +40,38 @@ class App extends React.Component {
   };
   handleInputChange = e => {
     this.setState({ queryString: e.target.value });
+    e.preventDefault();
   };
   handleSearch = () => {
-    console.log(this.state.queryString);
-    this.getRepos(this.state.query, this.state.variables);
+    const newQueryTemplate = this.handleNewQuery(this.state.queryString);
+    this.setState({ isLoaded: false });
+    this.getRepos(newQueryTemplate, this.state.variables);
   };
+  handleNewQuery = newQuery => `
+  {
+    search(query: "${newQuery}", type: REPOSITORY, first: 10) {
+      repositoryCount
+      edges {
+        node {
+          ... on Repository {
+            name
+            url
+            resourcePath
+            description
+            stargazers {
+              totalCount
+            }
+            forks {
+              totalCount
+            }
+            updatedAt
+          }
+        }
+      }
+    }
+  }
+  `;
+
   render() {
     const inputValue = this.state.queryString;
     const { error, isLoaded, items } = this.state;
