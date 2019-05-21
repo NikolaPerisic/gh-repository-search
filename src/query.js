@@ -20,6 +20,7 @@ query($first: Int!, $after: String, $query: String!, $type: SearchType!)
       }
     }
     pageInfo {
+      startCursor
       hasNextPage
       endCursor
     }

@@ -12,7 +12,8 @@ class App extends React.Component {
     error: null,
     isLoaded: false,
     queryString: "javascript",
-    items: []
+    items: [],
+    pageInfo: {}
   };
   componentDidMount() {
     this.getRepos(this.state.query, this.state.variables);
@@ -31,9 +32,13 @@ class App extends React.Component {
           }
         }
       );
+      let newItems = [...this.state.items].concat(
+        response.data.data.search.edges
+      );
       this.setState(() => ({
         isLoaded: true,
-        items: response.data.data.search.edges
+        items: newItems,
+        pageInfo: response.data.data.search.pageInfo
       }));
     } catch (error) {
       this.setState(() => ({ error }));
@@ -46,10 +51,15 @@ class App extends React.Component {
   handleSearch = () => {
     let newVariables = this.state.variables;
     newVariables.query = this.state.queryString;
-    this.setState({ variables: newVariables, isLoaded: false });
+    this.setState({ variables: newVariables, isLoaded: false, items: [] });
     this.getRepos(this.state.query, this.state.variables);
   };
-
+  addContent = () => {
+    let newVariables = this.state.variables;
+    newVariables.after = this.state.pageInfo.endCursor;
+    this.setState({ isLoaded: false });
+    this.getRepos(this.state.query, newVariables);
+  };
   render() {
     const inputValue = this.state.queryString;
     const { error, isLoaded, items } = this.state;
@@ -89,6 +99,18 @@ class App extends React.Component {
                 />
               );
             })}
+          </div>
+          <div className="pages">
+            <button
+              onClick={this.addContent}
+              style={
+                !this.state.isLoaded
+                  ? { display: "none" }
+                  : { display: "unset" }
+              }
+            >
+              More
+            </button>
           </div>
         </div>
       </div>
