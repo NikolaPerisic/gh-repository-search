@@ -3,11 +3,12 @@ import "./App.css";
 import axios from "axios";
 import List from "./List";
 import { query } from "./query";
+import { variables } from "./query";
 
 class App extends React.Component {
   state = {
     query: query,
-    variables: {},
+    variables: variables,
     error: null,
     isLoaded: false,
     queryString: "javascript",
@@ -43,34 +44,11 @@ class App extends React.Component {
     e.preventDefault();
   };
   handleSearch = () => {
-    const newQueryTemplate = this.handleNewQuery(this.state.queryString);
-    this.setState({ isLoaded: false });
-    this.getRepos(newQueryTemplate, this.state.variables);
+    let newVariables = this.state.variables;
+    newVariables.query = this.state.queryString;
+    this.setState({ variables: newVariables, isLoaded: false });
+    this.getRepos(this.state.query, this.state.variables);
   };
-  handleNewQuery = newQuery => `
-  {
-    search(query: "${newQuery}", type: REPOSITORY, first: 10) {
-      repositoryCount
-      edges {
-        node {
-          ... on Repository {
-            name
-            url
-            resourcePath
-            description
-            stargazers {
-              totalCount
-            }
-            forks {
-              totalCount
-            }
-            updatedAt
-          }
-        }
-      }
-    }
-  }
-  `;
 
   render() {
     const inputValue = this.state.queryString;
