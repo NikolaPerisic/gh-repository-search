@@ -85,6 +85,7 @@ class App extends React.Component {
       <div className="App">
         <div className="wrapper">
           <div className="label">Github repository search</div>
+          <p className="label-caption">Scrolling just got more fun</p>
           <div>
             <form className="search" onSubmit={this.handleSearch}>
               <label htmlFor="search" />
