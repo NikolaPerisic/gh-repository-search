@@ -6,22 +6,39 @@
 
 .App {
   text-align: center;
-  display: flex;
-  justify-content: center;
   color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .wrapper {
   margin-top: 50px;
+  display: flex;
+  width: 80%;
+  justify-content: center;
+  flex-direction: column;
 }
 .label {
   padding: 20px;
-  font-size: 1.5rem;
+  font-size: 2rem;
+  font-weight: 600;
   letter-spacing: 2px;
 }
-input {
-  width: 400px;
-  min-height: 30px;
-  font-size: 1.1rem;
+.search {
+  display: flex;
+  padding: 20px;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.search input {
+  width: 100%;
+  padding-left: 0.5rem;
+  border-radius: 3px;
+  /* outline-offset: 1px; */
+  outline-color: #48dbfb;
+  font-size: 1.5rem;
 }
 .results {
   text-align: start;
@@ -29,22 +46,25 @@ input {
 }
 .list-item {
   display: flex;
-  padding: 0.1rem;
-  margin: 0.2rem;
+  padding: 0.5rem;
+  overflow: hidden;
+  /* margin: 0.1rem; */
+  background-color: #f5f6fa;
   flex-direction: column;
-  border: 1px solid yellow;
-  background-color: #fff;
+  border: 2px solid #487eb0;
+  border-bottom: none;
   color: black;
 }
 .list-item a {
   text-decoration: none;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   color: firebrick;
 }
 p {
   padding: 0.1rem;
   margin: 0.2rem;
   overflow: hidden;
+  color: #2f3640;
 }
 .inline-item {
   display: inline-flex;
@@ -52,6 +72,7 @@ p {
 .forks::before {
   content: "\01F374";
 }
+
 .stars,
 .forks {
   padding: 0;
@@ -59,7 +80,52 @@ p {
   display: flex;
   align-items: center;
 }
+.stars {
+  padding-left: 0.3rem;
+}
 .stars::before {
   content: "\02605";
-  color: red;
+  color: #e84118;
+}
+button {
+  padding: 10px 40px;
+  margin-left: 0.5rem;
+  border-radius: 8px;
+  color: #fff;
+  font-size: 1.1rem;
+  text-decoration: none;
+  background-color: #82bf56;
+  border-bottom: 5px solid #669644;
+  text-shadow: 0px -2px #669644;
+  transition: all 0.1s;
+  -webkit-transition: all 0.1s;
+  outline: none;
+}
+button:active {
+  transform: translate(0px, 5px);
+  -webkit-transform: translate(0px, 5px);
+  border-bottom: 1px solid;
+}
+
+@media (min-width: 992px) {
+  .wrapper {
+    width: 60%;
+  }
+}
+@media (max-width: 768px) {
+  .wrapper {
+    width: 80%;
+  }
+}
+@media (max-width: 576px) {
+  .wrapper {
+    width: 100%;
+    margin: 0 auto;
+  }
+  .results {
+    padding: 0;
+  }
+  .search {
+    padding: 0.5rem;
+  }
 }

@@ -59,9 +59,9 @@ class App extends React.Component {
   };
   handleInputChange = e => {
     this.setState({ queryString: e.target.value });
-    e.preventDefault();
   };
-  handleSearch = () => {
+  handleSearch = e => {
+    e.preventDefault();
     let newVariables = this.state.variables;
     newVariables.query = this.state.queryString;
     this.setState({ variables: newVariables, isLoaded: false, items: [] });
@@ -85,18 +85,19 @@ class App extends React.Component {
       <div className="App">
         <div className="wrapper">
           <div className="label">Github repository search</div>
-          <label htmlFor="search">
-            <input
-              type="text"
-              name="search"
-              value={inputValue}
-              placeholder="search..."
-              onChange={this.handleInputChange}
-            />
-          </label>
-          <button type="submit" onClick={this.handleSearch}>
-            Search
-          </button>
+          <div>
+            <form className="search" onSubmit={this.handleSearch}>
+              <label htmlFor="search" />
+              <input
+                type="text"
+                name="search"
+                value={inputValue}
+                placeholder="search..."
+                onChange={this.handleInputChange}
+              />
+              <button type="submit">Search</button>
+            </form>
+          </div>
           <div className="results">
             {error ? errorMessage : loading}
             {items.map((item, key) => {
