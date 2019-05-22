@@ -17,7 +17,20 @@ class App extends React.Component {
   };
   componentDidMount() {
     this.getRepos(this.state.query, this.state.variables);
+    window.addEventListener("scroll", this.onScroll, false);
   }
+  componentWillUnmount() {
+    window.removeEventListener("scroll", this.onScroll, false);
+  }
+  onScroll = () => {
+    if (
+      window.innerHeight + window.scrollY >= document.body.offsetHeight &&
+      this.state.items.length &&
+      this.state.isLoaded
+    ) {
+      this.addContent();
+    }
+  };
   getRepos = async (query, variables) => {
     try {
       const response = await axios.post(

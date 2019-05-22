@@ -28,7 +28,7 @@ query($first: Int!, $after: String, $query: String!, $type: SearchType!)
 }
 `;
 export const variables = {
-  first: 10,
+  first: 15,
   after: null,
   query: "javascript",
   type: "REPOSITORY"
