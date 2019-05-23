@@ -24,7 +24,7 @@ class App extends React.Component {
   }
   onScroll = () => {
     if (
-      window.innerHeight + window.scrollY >= document.body.offsetHeight &&
+      window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 &&
       this.state.items.length &&
       this.state.isLoaded
     ) {
@@ -79,7 +79,7 @@ class App extends React.Component {
     let errorMessage = null,
       loading = null;
     if (error) errorMessage = <div>{error.message}</div>;
-    if (!isLoaded) loading = <div>Loading...</div>;
+    if (!isLoaded) loading = <div className="loading-text">Loading...</div>;
 
     return (
       <div className="App">
@@ -99,6 +99,7 @@ class App extends React.Component {
               <button type="submit">Search</button>
             </form>
           </div>
+
           <div className="results">
             {error ? errorMessage : loading}
             {items.map((item, key) => {
@@ -115,18 +116,12 @@ class App extends React.Component {
               );
             })}
           </div>
-          <div className="pages">
-            <button
-              onClick={this.addContent}
-              style={
-                !this.state.isLoaded
-                  ? { display: "none" }
-                  : { display: "unset" }
-              }
-            >
-              More
-            </button>
-          </div>
+          <div
+            className="loader"
+            style={
+              this.state.isLoaded ? { display: "none" } : { display: "unset" }
+            }
+          />
         </div>
       </div>
     );
