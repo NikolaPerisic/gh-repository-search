@@ -57,14 +57,13 @@
   display: flex;
   padding: 0.5rem;
   overflow: hidden;
-  /* margin: 0.1rem; */
   background-color: #f5f6fa;
   flex-direction: column;
   border: 2px solid #487eb0;
   border-bottom: none;
   color: black;
 }
-.list-item a {
+.url {
   text-decoration: none;
   font-size: 1.5rem;
   color: firebrick;
@@ -115,6 +114,14 @@ button:active {
   transform: translate(0px, 5px);
   -webkit-transform: translate(0px, 5px);
   border-bottom: 1px solid;
+}
+.homepageUrl {
+  padding: 0.1rem;
+  margin: 0.2rem;
+  margin-left: 0;
+  overflow: hidden;
+  color: #2f3640;
+  text-decoration: none;
 }
 .loader,
 .loader:after {
@@ -186,10 +193,11 @@ button:active {
   button {
     padding: 5px 20px;
   }
-  .list-item a {
+  .url {
     font-size: 1rem;
   }
-  p {
+  p,
+  .homepageUrl {
     font-size: 0.8rem;
   }
 }

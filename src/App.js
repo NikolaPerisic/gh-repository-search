@@ -48,6 +48,7 @@ class App extends React.Component {
       let newItems = [...this.state.items].concat(
         response.data.data.search.edges
       );
+      console.log(response.data);
       this.setState(() => ({
         isLoaded: true,
         items: newItems,
@@ -112,6 +113,7 @@ class App extends React.Component {
                   stars={item.node.stargazers.totalCount}
                   forks={item.node.forks.totalCount}
                   updatedAt={item.node.updatedAt}
+                  homepageUrl={item.node.homepageUrl}
                 />
               );
             })}

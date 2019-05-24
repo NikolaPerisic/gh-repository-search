@@ -1,12 +1,19 @@
 export const query = `
 query($first: Int!, $after: String, $query: String!, $type: SearchType!)
 {
+  rateLimit {
+    limit
+    cost
+    remaining
+    resetAt
+  }
   search(first: $first, after: $after, query: $query, type: $type) {
     edges {
       node {
         ... on Repository {
           name
           url
+          homepageUrl
           resourcePath
           description
           stargazers {
