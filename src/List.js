@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 const list = props => {
   let date = new Date(props.updatedAt).toLocaleDateString();
@@ -17,12 +18,18 @@ const list = props => {
         <a href={props.url} target="blank" className="url">
           {props.name}
         </a>
-        <p className="stars">{props.stars}</p>
-        <p className="forks">{props.forks}</p>
+        <div className="item-right">
+          <FontAwesomeIcon icon="star" className="starIcon" />
+          <p className="stars">{props.stars}</p>
+          <FontAwesomeIcon icon="code-branch" className="forkIcon" />
+          <p className="forks">{props.forks}</p>
+        </div>
       </div>
       <p>{props.description}</p>
-      {homepage}
-      <p>Updated At: {date}</p>
+      <div className="detailsInfo">
+        {homepage}
+        <p className="updatedAt">Updated: {date}</p>
+      </div>
     </div>
   );
 };

@@ -4,6 +4,11 @@ import axios from "axios";
 import List from "./List";
 import { query } from "./query";
 import { variables } from "./query";
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { faCodeBranch } from "@fortawesome/free-solid-svg-icons";
+import { faStar } from "@fortawesome/free-solid-svg-icons";
+
+library.add(faCodeBranch, faStar);
 
 class App extends React.Component {
   state = {
@@ -48,7 +53,6 @@ class App extends React.Component {
       let newItems = [...this.state.items].concat(
         response.data.data.search.edges
       );
-      console.log(response.data);
       this.setState(() => ({
         isLoaded: true,
         items: newItems,
